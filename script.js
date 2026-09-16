@@ -247,6 +247,33 @@ const JOB_OPENINGS = [
     tags: ["SAP ABAP", "S/4HANA", "BRIM", "FI-CA", "ABAP OO", "CDS Views", "AMDP", "RAP", "OData", "Fiori/UI5", "IDocs", "RFC", "GENIL/BOL"],
     preferred: "SAP BTP | Business Application Studio (BAS) | Fiori Elements | DevOps | Agile",
     badgeColor: "orange"
+  },
+  {
+    id: "PB-SAP-DATA-03",
+    title: "SAP BRIM Data Analyst / Developer – BODS + EMIGALL",
+    urgent: true,
+    department: "SAP Practice (Data Migration)",
+    deptKey: "sap",
+    employmentType: "C2H (Contract-to-Hire)",
+    location: "India Delivery Hub / Hybrid / Remote",
+    locKey: "hybrid",
+    experience: "9+ Years overall | 5+ Years BODS | 3+ Years EMIGALL",
+    description: "We are looking for an experienced professional with strong expertise in SAP BODS, EMIGALL, and SAP BRIM/FI-CA data migration. You will lead source-to-target mapping, ETL jobs, EMIGALL object configuration, mock conversions, and cutovers.",
+    responsibilities: [
+      "Support SAP BRIM data migration and conversion across SOM, CC, CI and FI-CA",
+      "Develop source-to-target mappings and complex transformation logic",
+      "Design and maintain BODS ETL jobs, workflows, data cleansing and scripts",
+      "Optimise ETL performance and troubleshoot complex job failures",
+      "Configure EMIGALL migration objects and load programs",
+      "Support master and transactional data migration across legacy and S/4HANA systems",
+      "Execute migration loads, automated data validation and reconciliation reports",
+      "Support mock conversions, dress rehearsals and production cutover windows",
+      "Develop SQL queries and reconciliation verification dashboards",
+      "Support BRIM integrations with S/4HANA, CRM and external legacy architectures"
+    ],
+    tags: ["SAP BODS", "SAP BRIM", "EMIGALL", "FI-CA Migration", "ETL", "Data Mapping", "Data Transformation", "SQL", "Reconciliation", "S/4HANA"],
+    preferred: "SAP Data Migration Cockpit | SAP HANA | Datasphere | SAC | Cloud SAP Environments",
+    badgeColor: "orange"
   }
 ];
 
