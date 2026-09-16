@@ -274,6 +274,32 @@ const JOB_OPENINGS = [
     tags: ["SAP BODS", "SAP BRIM", "EMIGALL", "FI-CA Migration", "ETL", "Data Mapping", "Data Transformation", "SQL", "Reconciliation", "S/4HANA"],
     preferred: "SAP Data Migration Cockpit | SAP HANA | Datasphere | SAC | Cloud SAP Environments",
     badgeColor: "orange"
+  },
+  {
+    id: "PB-SAP-BRIM-04",
+    title: "SAP BRIM Developer – SOM / CC / CI / FI-CA",
+    urgent: true,
+    department: "SAP Practice (BRIM End-to-End)",
+    deptKey: "sap",
+    employmentType: "C2H (Contract-to-Hire)",
+    location: "India Delivery Hub / Hybrid / Remote",
+    locKey: "hybrid",
+    experience: "9+ Years overall | 5+ Years SAP BRIM",
+    description: "We are looking for an experienced SAP BRIM Developer with strong hands-on expertise across SOM, CC, CI, and FI-CA. You will develop subscription and usage-based billing solutions, invoicing aggregations, financial postings, ABAP enhancements, and third-party integrations.",
+    responsibilities: [
+      "Develop and support SAP BRIM end-to-end technical solutions",
+      "Work on complex subscription management and usage-based billing models",
+      "Develop SOM (Subscription Order Management) processes, master data, and integrations",
+      "Support Convergent Charging (CC), rating, pricing tiers, and mediation integrations",
+      "Develop Convergent Invoicing (CI), billing aggregation, and financial posting solutions",
+      "Support FI-CA, payments, collections, automated dunning, and reconciliation workflows",
+      "Develop custom ABAP enhancements, BADIs, user exits, APIs, and OData services",
+      "Support S/4HANA, CRM/CX, and third-party enterprise integrations",
+      "Participate in testing, troubleshooting, performance tuning, and production support"
+    ],
+    tags: ["SAP BRIM", "SOM", "Convergent Charging (CC)", "Convergent Invoicing (CI)", "FI-CA", "ABAP", "SAP HANA", "S/4HANA Integration", "APIs", "OData", "Middleware"],
+    preferred: "SAP BTP | Integration Suite | Fiori | Datasphere | Cloud SAP | DevOps / CI/CD",
+    badgeColor: "orange"
   }
 ];
 
