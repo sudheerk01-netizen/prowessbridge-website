@@ -89,8 +89,8 @@
         <p>Find your next challenge. Apply directly with your CV and cover letter to fast-track your interview process.</p>
       </div>
 
-      <!-- FILTER & SEARCH BAR -->
-      <div class="career-filter-bar">
+      <!-- FILTER & SEARCH BAR (Auto-hidden if no individual postings) -->
+      <div class="career-filter-bar" id="careerFilterBar">
         <div class="search-input-wrapper">
           <span class="search-icon">🔍</span>
           <input type="text" id="jobSearchInput" placeholder="Search by role title, technology, or skills...">
@@ -110,162 +110,12 @@
           <option value="remote">Remote</option>
         </select>
 
-        <div class="filter-counter" id="jobCountDisplay">Showing 6 Openings</div>
+        <div class="filter-counter" id="jobCountDisplay">Showing Openings</div>
       </div>
 
-      <!-- JOB CARDS GRID -->
-      <div class="jobs-list-grid" id="jobsGrid">
-
-        <!-- JOB 1: SAP FICO -->
-        <div class="job-card-item" data-dept="sap" data-loc="hybrid">
-          <div>
-            <div class="job-meta-top">
-              <span class="job-dept-badge orange">SAP Practice</span>
-              <span class="job-location-pill">📍 Hyderabad / Bangalore • Hybrid</span>
-            </div>
-            <h3 class="job-card-title">Lead SAP S/4HANA FICO Consultant</h3>
-            <p class="job-card-desc">Lead enterprise S/4HANA finance transformations, Clean Core architecture design, Universal Journal integration, and cross-functional mapping with SD and MM.</p>
-            <div class="job-tags-row">
-              <span class="job-skill-chip">SAP S/4HANA</span>
-              <span class="job-skill-chip">FICO</span>
-              <span class="job-skill-chip">Clean Core</span>
-              <span class="job-skill-chip">BTP</span>
-              <span class="job-skill-chip">Universal Journal</span>
-            </div>
-          </div>
-          <div class="job-card-footer">
-            <div class="job-exp-info">Experience: <strong>7–10 Years</strong></div>
-            <button class="btn btn-primary apply-now-btn" data-job-id="PB-JOB-01" data-job-title="Lead SAP S/4HANA FICO Consultant">Apply Now ↗</button>
-          </div>
-        </div>
-
-        <!-- JOB 2: Full-Stack Cloud -->
-        <div class="job-card-item" data-dept="cloud" data-loc="remote">
-          <div>
-            <div class="job-meta-top">
-              <span class="job-dept-badge">Cloud & Engineering</span>
-              <span class="job-location-pill">📍 India Hub / Remote</span>
-            </div>
-            <h3 class="job-card-title">Senior Full-Stack Cloud Engineer</h3>
-            <p class="job-card-desc">Architect scalable web portals and event-driven microservices using React, Node.js, and Python. Build resilient REST/GraphQL APIs and containerized cloud services on AWS/Azure.</p>
-            <div class="job-tags-row">
-              <span class="job-skill-chip">React</span>
-              <span class="job-skill-chip">Node.js</span>
-              <span class="job-skill-chip">TypeScript</span>
-              <span class="job-skill-chip">AWS / GCP</span>
-              <span class="job-skill-chip">Kubernetes</span>
-            </div>
-          </div>
-          <div class="job-card-footer">
-            <div class="job-exp-info">Experience: <strong>5–8 Years</strong></div>
-            <button class="btn btn-primary apply-now-btn" data-job-id="PB-JOB-02" data-job-title="Senior Full-Stack Cloud Engineer">Apply Now ↗</button>
-          </div>
-        </div>
-
-        <!-- JOB 3: Supply Chain -->
-        <div class="job-card-item" data-dept="supply" data-loc="hybrid">
-          <div>
-            <div class="job-meta-top">
-              <span class="job-dept-badge green">Supply Chain</span>
-              <span class="job-location-pill">📍 India Hub • Hybrid</span>
-            </div>
-            <h3 class="job-card-title">Supply Chain Planning Lead (S&OP)</h3>
-            <p class="job-card-desc">Drive multi-echelon demand forecasting, inventory optimization, and Procure-to-Pay (P2P) automation for international logistics and manufacturing engagements.</p>
-            <div class="job-tags-row">
-              <span class="job-skill-chip">S&OP Planning</span>
-              <span class="job-skill-chip">P2P Automation</span>
-              <span class="job-skill-chip">WMS</span>
-              <span class="job-skill-chip">Control Tower</span>
-            </div>
-          </div>
-          <div class="job-card-footer">
-            <div class="job-exp-info">Experience: <strong>6–9 Years</strong></div>
-            <button class="btn btn-primary apply-now-btn" data-job-id="PB-JOB-03" data-job-title="Supply Chain Planning Lead (S&OP)">Apply Now ↗</button>
-          </div>
-        </div>
-
-        <!-- JOB 4: QA Automation -->
-        <div class="job-card-item" data-dept="cloud" data-loc="remote">
-          <div>
-            <div class="job-meta-top">
-              <span class="job-dept-badge">Cloud & Engineering</span>
-              <span class="job-location-pill">📍 Remote</span>
-            </div>
-            <h3 class="job-card-title">QA Automation Lead (Playwright & CI/CD)</h3>
-            <p class="job-card-desc">Architect test automation frameworks for web applications and APIs. Implement automated regression suites, continuous quality gates, and performance load tests.</p>
-            <div class="job-tags-row">
-              <span class="job-skill-chip">Playwright</span>
-              <span class="job-skill-chip">Selenium</span>
-              <span class="job-skill-chip">TypeScript</span>
-              <span class="job-skill-chip">CI/CD Gates</span>
-              <span class="job-skill-chip">API Testing</span>
-            </div>
-          </div>
-          <div class="job-card-footer">
-            <div class="job-exp-info">Experience: <strong>4–7 Years</strong></div>
-            <button class="btn btn-primary apply-now-btn" data-job-id="PB-JOB-04" data-job-title="QA Automation Lead (Playwright & CI/CD)">Apply Now ↗</button>
-          </div>
-        </div>
-
-        <!-- JOB 5: DevOps / SRE -->
-        <div class="job-card-item" data-dept="cloud" data-loc="hybrid">
-          <div>
-            <div class="job-meta-top">
-              <span class="job-dept-badge">Cloud & DevOps</span>
-              <span class="job-location-pill">📍 India Hub • Hybrid</span>
-            </div>
-            <h3 class="job-card-title">DevOps & Site Reliability Architect</h3>
-            <p class="job-card-desc">Orchestrate enterprise Kubernetes clusters (EKS/AKS/GKE), automate infrastructure using Terraform, and ensure 99.99% system availability with proactive observability.</p>
-            <div class="job-tags-row">
-              <span class="job-skill-chip">Terraform</span>
-              <span class="job-skill-chip">Kubernetes</span>
-              <span class="job-skill-chip">GitHub Actions</span>
-              <span class="job-skill-chip">Prometheus</span>
-              <span class="job-skill-chip">AWS / Azure</span>
-            </div>
-          </div>
-          <div class="job-card-footer">
-            <div class="job-exp-info">Experience: <strong>6–10 Years</strong></div>
-            <button class="btn btn-primary apply-now-btn" data-job-id="PB-JOB-05" data-job-title="DevOps & Site Reliability Architect">Apply Now ↗</button>
-          </div>
-        </div>
-
-        <!-- JOB 6: Recruiter ProCXel -->
-        <div class="job-card-item" data-dept="talent" data-loc="hybrid">
-          <div>
-            <div class="job-meta-top">
-              <span class="job-dept-badge pink">Talent & Recruitment</span>
-              <span class="job-location-pill">📍 India Hub • Hybrid</span>
-            </div>
-            <h3 class="job-card-title">Senior IT & SAP Talent Acquisition Lead</h3>
-            <p class="job-card-desc">Spearhead technical talent acquisition for lateral and leadership roles at ProCXel. Leverage our AI Screener ATS platform to source, evaluate, and place verified talent.</p>
-            <div class="job-tags-row">
-              <span class="job-skill-chip">IT Recruitment</span>
-              <span class="job-skill-chip">SAP Sourcing</span>
-              <span class="job-skill-chip">Executive Search</span>
-              <span class="job-skill-chip">ATS Intelligence</span>
-            </div>
-          </div>
-          <div class="job-card-footer">
-            <div class="job-exp-info">Experience: <strong>4–7 Years</strong></div>
-            <button class="btn btn-pink apply-now-btn" data-job-id="PB-JOB-06" data-job-title="Senior IT & SAP Talent Acquisition Lead">Apply Now ↗</button>
-          </div>
-        </div>
-
-        <!-- GENERAL APPLICATION BANNER -->
-        <div class="general-app-banner">
-          <div class="general-app-text">
-            <span class="card-tag" style="color:var(--teal);">TALENT POOL INVITATION</span>
-            <h3>Don't see a role that matches your profile?</h3>
-            <p>We are constantly expanding our engineering, SAP, and consulting practice pods. Submit a general application, and our recruiters will review your CV for upcoming engagements.</p>
-          </div>
-          <div>
-            <button class="btn btn-outline apply-now-btn" data-job-id="PB-JOB-GEN" data-job-title="General Application / Future Opportunities" style="border-color:var(--teal); color:#ffffff;">
-              Submit General Application ↗
-            </button>
-          </div>
-        </div>
-
+      <!-- DYNAMIC JOBS OR TALENT POOL CONTAINER -->
+      <div class="jobs-list-grid" id="jobsDynamicContainer">
+        <!-- Rendered dynamically by script.js -->
       </div>
     </div>
   </section>
@@ -290,7 +140,22 @@
         <!-- FORM VIEW -->
         <form id="careerApplicationForm">
           <input type="hidden" id="appliedJobId" name="jobId" value="PB-JOB-01">
-          <input type="hidden" id="appliedJobTitle" name="jobTitle" value="Lead SAP S/4HANA FICO Consultant">
+          <input type="hidden" id="appliedJobTitle" name="jobTitle" value="General Application / Enterprise Talent Pool">
+
+          <!-- Primary Domain Selection -->
+          <div class="form-group" style="margin-bottom:20px;">
+            <label for="applicantDomain">Primary Domain / Area of Expertise *</label>
+            <select id="applicantDomain" class="form-control form-select" required>
+              <option value="SAP S/4HANA Practice">SAP S/4HANA Practice (Functional FICO/MM/SD/PP/EWM, ABAP, BTP)</option>
+              <option value="Cloud & Software Engineering">Cloud & Software Engineering (Full-Stack, React, Node, Python, AWS)</option>
+              <option value="DevOps & Site Reliability">DevOps, Site Reliability & Kubernetes Architecture</option>
+              <option value="QA & Test Automation">QA & Test Automation (Playwright, Selenium, CI/CD)</option>
+              <option value="Supply Chain & Operations">Supply Chain & Operations (S&OP, P2P Automation, Logistics)</option>
+              <option value="Talent Acquisition & HR">ProCXel Talent Acquisition & Technical Recruitment</option>
+              <option value="Executive & Delivery Leadership">Executive & Delivery Leadership</option>
+              <option value="Other">Other Specialized Expertise</option>
+            </select>
+          </div>
 
           <!-- Row 1: Name & Email -->
           <div class="form-row">

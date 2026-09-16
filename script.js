@@ -191,51 +191,201 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // ============================================================
-// CAREERS & APPLICATION FORM LOGIC
+
 // ============================================================
+// CAREERS: DYNAMIC JOB OPENINGS CONFIGURATION
+// ============================================================
+// To post a new job opening, simply add an object below.
+// If this list is empty (const JOB_OPENINGS = [];), the page
+// automatically displays the "Active Talent Pool & Upcoming Engagements"
+// banner inviting candidates to submit their CV and profile.
+// ============================================================
+const JOB_OPENINGS = [
+  // UNCOMMENT OR ADD NEW OPENINGS HERE AS REQUIREMENTS ARISE:
+  /*
+  {
+    id: "PB-JOB-01",
+    title: "Lead SAP S/4HANA FICO Consultant",
+    department: "SAP Practice",
+    deptKey: "sap",
+    location: "Hyderabad / Bangalore • Hybrid",
+    locKey: "hybrid",
+    experience: "7–10 Years",
+    description: "Lead enterprise S/4HANA finance transformations, Clean Core architecture design, Universal Journal integration, and cross-functional mapping with SD and MM.",
+    tags: ["SAP S/4HANA", "FICO", "Clean Core", "BTP", "Universal Journal"],
+    badgeColor: "orange"
+  },
+  {
+    id: "PB-JOB-02",
+    title: "Senior Full-Stack Cloud Engineer",
+    department: "Cloud & Engineering",
+    deptKey: "cloud",
+    location: "India Hub / Remote",
+    locKey: "remote",
+    experience: "5–8 Years",
+    description: "Architect scalable web portals and event-driven microservices using React, Node.js, and Python. Build resilient REST/GraphQL APIs and containerized cloud services on AWS/Azure.",
+    tags: ["React", "Node.js", "TypeScript", "AWS / GCP", "Kubernetes"],
+    badgeColor: ""
+  }
+  */
+];
+
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. FILTER & SEARCH LOGIC
+  const jobsContainer = document.getElementById('jobsDynamicContainer');
+  const filterBar = document.getElementById('careerFilterBar');
+  const countDisplay = document.getElementById('jobCountDisplay');
   const searchInput = document.getElementById('jobSearchInput');
   const deptFilter = document.getElementById('departmentFilter');
   const locFilter = document.getElementById('locationFilter');
-  const jobCards = document.querySelectorAll('.job-card-item');
-  const countDisplay = document.getElementById('jobCountDisplay');
+
+  // Render Job Openings or Talent Pool State
+  function renderJobsList() {
+    if (!jobsContainer) return;
+
+    if (!JOB_OPENINGS || JOB_OPENINGS.length === 0) {
+      // Hide filter bar if no individual jobs are posted
+      if (filterBar) filterBar.style.display = 'none';
+
+      // Render Active Talent Pool Showcase
+      jobsContainer.innerHTML = `
+        <div class="talent-pool-hero-card">
+          <div class="talent-pool-status-tag">
+            <span class="pulse-dot"></span> Active Talent Acquisition & Ongoing Sourcing
+          </div>
+          
+          <h3 class="talent-pool-title">We Hire On An Ongoing Basis for Enterprise Engagements</h3>
+          <p class="talent-pool-desc">
+            Our technology delivery teams and SAP transformation pods expand dynamically based on new client requirements across North America, Europe, and India. While active project positions are being finalized, we continuously evaluate and interview experienced specialists.
+          </p>
+
+          <div class="practice-areas-grid">
+            <div class="practice-pill-card">
+              <span class="practice-icon">⚡</span>
+              <div>
+                <strong>SAP S/4HANA Practice</strong>
+                <p>FICO, SD, MM, PP, EWM, ABAP on HANA, SAP BTP & AMS</p>
+              </div>
+            </div>
+            
+            <div class="practice-pill-card">
+              <span class="practice-icon">☁️</span>
+              <div>
+                <strong>Cloud & Software Engineering</strong>
+                <p>Full-Stack React/Node, Python, DevOps, Kubernetes, QA Automation</p>
+              </div>
+            </div>
+
+            <div class="practice-pill-card">
+              <span class="practice-icon">📦</span>
+              <div>
+                <strong>Supply Chain & Logistics</strong>
+                <p>S&OP Demand Planning, Procure-to-Pay (P2P), WMS, Control Tower</p>
+              </div>
+            </div>
+
+            <div class="practice-pill-card">
+              <span class="practice-icon">🎯</span>
+              <div>
+                <strong>ProCXel Recruitment Desk</strong>
+                <p>Technical Recruiters, Sourcing Specialists, Executive Search</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="talent-pool-cta-wrap">
+            <button class="btn btn-primary apply-now-btn" data-job-id="PB-TALENT-POOL" data-job-title="General Application / Enterprise Talent Pool" style="padding:16px 36px; font-size:1.05rem;">
+              Submit Your CV & Express Interest ↗
+            </button>
+            <span style="font-size:0.9rem; color:var(--text-dim); display:block; margin-top:12px;">
+              ⚡ Applications are reviewed directly by our Practice Leads within 48–72 hours.
+            </span>
+          </div>
+        </div>
+      `;
+
+      attachModalListeners();
+      return;
+    }
+
+    // If openings exist:
+    if (filterBar) filterBar.style.display = 'flex';
+    filterJobs();
+  }
 
   function filterJobs() {
-    if (!jobCards.length) return;
+    if (!JOB_OPENINGS || JOB_OPENINGS.length === 0) return;
+
     const query = (searchInput?.value || '').toLowerCase().trim();
     const dept = deptFilter?.value || 'all';
     const loc = locFilter?.value || 'all';
 
-    let visibleCount = 0;
-
-    jobCards.forEach(card => {
-      const cardDept = card.getAttribute('data-dept') || '';
-      const cardLoc = card.getAttribute('data-loc') || '';
-      const textContent = card.innerText.toLowerCase();
-
-      const matchesSearch = !query || textContent.includes(query);
-      const matchesDept = dept === 'all' || cardDept === dept;
-      const matchesLoc = loc === 'all' || cardLoc === loc;
-
-      if (matchesSearch && matchesDept && matchesLoc) {
-        card.style.display = 'flex';
-        visibleCount++;
-      } else {
-        card.style.display = 'none';
-      }
+    const filtered = JOB_OPENINGS.filter(job => {
+      const matchesSearch = !query || 
+        job.title.toLowerCase().includes(query) || 
+        job.description.toLowerCase().includes(query) ||
+        (job.tags && job.tags.some(t => t.toLowerCase().includes(query)));
+      const matchesDept = dept === 'all' || job.deptKey === dept;
+      const matchesLoc = loc === 'all' || job.locKey === loc;
+      return matchesSearch && matchesDept && matchesLoc;
     });
 
     if (countDisplay) {
-      countDisplay.textContent = `Showing ${visibleCount} Opening${visibleCount === 1 ? '' : 's'}`;
+      countDisplay.textContent = `Showing ${filtered.length} Opening${filtered.length === 1 ? '' : 's'}`;
     }
+
+    if (filtered.length === 0) {
+      jobsContainer.innerHTML = `
+        <div style="grid-column: 1 / -1; text-align:center; padding:50px 20px; background:var(--bg-card); border-radius:20px; border:1px solid var(--border-glass);">
+          <h4 style="font-size:1.3rem; color:#ffffff; margin-bottom:8px;">No matching openings found</h4>
+          <p style="color:var(--text-secondary); margin-bottom:20px;">Try adjusting your search criteria or submit a general application.</p>
+          <button class="btn btn-outline apply-now-btn" data-job-id="PB-TALENT-POOL" data-job-title="General Application / Enterprise Talent Pool">
+            Submit General Application ↗
+          </button>
+        </div>
+      `;
+    } else {
+      jobsContainer.innerHTML = filtered.map(job => `
+        <div class="job-card-item">
+          <div>
+            <div class="job-meta-top">
+              <span class="job-dept-badge ${job.badgeColor || ''}">${job.department}</span>
+              <span class="job-location-pill">📍 ${job.location}</span>
+            </div>
+            <h3 class="job-card-title">${job.title}</h3>
+            <p class="job-card-desc">${job.description}</p>
+            <div class="job-tags-row">
+              ${(job.tags || []).map(tag => `<span class="job-skill-chip">${tag}</span>`).join('')}
+            </div>
+          </div>
+          <div class="job-card-footer">
+            <div class="job-exp-info">Experience: <strong>${job.experience}</strong></div>
+            <button class="btn btn-primary apply-now-btn" data-job-id="${job.id}" data-job-title="${job.title}">Apply Now ↗</button>
+          </div>
+        </div>
+      `).join('') + `
+        <div class="general-app-banner">
+          <div class="general-app-text">
+            <span class="card-tag" style="color:var(--teal);">TALENT POOL INVITATION</span>
+            <h3>Looking for another domain or leadership role?</h3>
+            <p>Submit your profile to our general talent pool. When client mandates match your expertise, our practice leads reach out immediately.</p>
+          </div>
+          <div>
+            <button class="btn btn-outline apply-now-btn" data-job-id="PB-TALENT-POOL" data-job-title="General Application / Enterprise Talent Pool" style="border-color:var(--teal); color:#ffffff;">
+              Submit Profile ↗
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    attachModalListeners();
   }
 
   searchInput?.addEventListener('input', filterJobs);
   deptFilter?.addEventListener('change', filterJobs);
   locFilter?.addEventListener('change', filterJobs);
 
-  // 2. MODAL TOGGLE & ROLE AUTO-POPULATE
+  // Modal Setup
   const modal = document.getElementById('applicationModal');
   const modalCloseBtn = document.getElementById('modalCloseBtn');
   const modalRoleTitle = document.getElementById('modalJobTitle');
@@ -254,7 +404,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (appliedJobId) appliedJobId.value = jobId;
     if (appliedJobTitle) appliedJobTitle.value = jobTitle;
 
-    // Reset view states
     if (careerForm) careerForm.style.display = 'block';
     if (modalSuccessView) modalSuccessView.classList.remove('active');
 
@@ -268,34 +417,30 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.overflow = 'auto';
   }
 
-  document.querySelectorAll('.apply-now-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const jobId = btn.getAttribute('data-job-id') || 'PB-JOB-GEN';
-      const jobTitle = btn.getAttribute('data-job-title') || 'General Application';
-      openModal(jobId, jobTitle);
+  function attachModalListeners() {
+    document.querySelectorAll('.apply-now-btn').forEach(btn => {
+      btn.onclick = (e) => {
+        e.preventDefault();
+        const jobId = btn.getAttribute('data-job-id') || 'PB-TALENT-POOL';
+        const jobTitle = btn.getAttribute('data-job-title') || 'General Application';
+        openModal(jobId, jobTitle);
+      };
     });
-  });
+  }
 
   modalCloseBtn?.addEventListener('click', closeModal);
   closeSuccessBtn?.addEventListener('click', closeModal);
 
-  // Close on backdrop click
   modal?.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      closeModal();
-    }
+    if (e.target === modal) closeModal();
   });
 
-  // Close on Escape key
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal?.classList.contains('active')) {
-      closeModal();
-    }
+    if (e.key === 'Escape' && modal?.classList.contains('active')) closeModal();
   });
 
-  // 3. FILE UPLOAD & VALIDATION (CV & Cover Letter)
-  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
+  // File Upload Handlers (CV & Cover Letter)
+  const MAX_FILE_SIZE = 5 * 1024 * 1024;
   const ALLOWED_EXTS = ['pdf', 'docx', 'doc'];
 
   function setupDropzone(dropzoneId, inputId, previewChipId, nameId, sizeId, removeBtnId, errorId) {
@@ -319,7 +464,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!file) return;
       const ext = file.name.split('.').pop().toLowerCase();
 
-      // Validation
       if (!ALLOWED_EXTS.includes(ext) || file.size > MAX_FILE_SIZE) {
         if (errorEl) {
           errorEl.textContent = !ALLOWED_EXTS.includes(ext)
@@ -339,30 +483,30 @@ document.addEventListener('DOMContentLoaded', () => {
       return true;
     }
 
-    dropzone.addEventListener('click', () => input.click());
+    dropzone.onclick = () => input.click();
 
-    input.addEventListener('change', (e) => {
+    input.onchange = (e) => {
       const file = e.target.files[0];
       handleFile(file);
-    });
+    };
 
-    dropzone.addEventListener('dragover', (e) => {
+    dropzone.ondragover = (e) => {
       e.preventDefault();
       dropzone.classList.add('dragover');
-    });
+    };
 
-    dropzone.addEventListener('dragleave', () => {
+    dropzone.ondragleave = () => {
       dropzone.classList.remove('dragover');
-    });
+    };
 
-    dropzone.addEventListener('drop', (e) => {
+    dropzone.ondrop = (e) => {
       e.preventDefault();
       dropzone.classList.remove('dragover');
       if (e.dataTransfer.files.length) {
         input.files = e.dataTransfer.files;
         handleFile(e.dataTransfer.files[0]);
       }
-    });
+    };
 
     removeBtn?.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -375,7 +519,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupDropzone('cvDropzone', 'cvFileInput', 'cvPreviewChip', 'cvFileName', 'cvFileSize', 'cvRemoveBtn', 'cvErrorMsg');
   setupDropzone('clDropzone', 'clFileInput', 'clPreviewChip', 'clFileName', 'clFileSize', 'clRemoveBtn', 'clErrorMsg');
 
-  // 4. SUBMISSION HANDLER
+  // Form Submission
   careerForm?.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -395,7 +539,6 @@ document.addEventListener('DOMContentLoaded', () => {
       submitBtn.textContent = 'Transmitting Application...';
     }
 
-    // Simulate reliable dispatch
     setTimeout(() => {
       const randomRef = 'PB-APP-' + Math.floor(1000 + Math.random() * 9000);
       if (successRefCode) successRefCode.textContent = `Application Ref: #${randomRef}`;
@@ -408,10 +551,12 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.textContent = 'Submit Application ↗';
       }
 
-      // Reset form fields
       careerForm.reset();
       document.getElementById('cvPreviewChip')?.classList.remove('active');
       document.getElementById('clPreviewChip')?.classList.remove('active');
     }, 1200);
   });
+
+  // Initial Run
+  renderJobsList();
 });
