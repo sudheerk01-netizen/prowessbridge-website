@@ -219,6 +219,34 @@ const JOB_OPENINGS = [
     tags: ["SAP Convergent Mediation", "SAP BRIM", "Event Processing", "Mediation Pipelines", "SAP CC", "SAP CI", "FI-CA", "APIs & Middleware", "Performance Tuning"],
     preferred: "SAP S/4HANA | Integration Suite | SAP BTP | Kafka / Event Streaming | Cloud SAP | DevOps",
     badgeColor: "orange"
+  },
+  {
+    id: "PB-SAP-ABAP-02",
+    title: "SAP ABAP Developer – S/4HANA / BRIM / FI-CA / Fiori",
+    urgent: true,
+    department: "SAP Practice (BRIM & S/4HANA)",
+    deptKey: "sap",
+    employmentType: "C2H (Contract-to-Hire)",
+    location: "India Delivery Hub / Hybrid / Remote",
+    locKey: "hybrid",
+    experience: "10+ Years SAP ABAP | 6+ Years BRIM / FI-CA",
+    description: "We are looking for a highly experienced SAP ABAP Developer with strong expertise in S/4HANA, BRIM, FI-CA, and Fiori/UI5. You will engineer custom objects, CDS views, AMDP, RAP, OData APIs, and support end-to-end billing, invoicing, payments, and dunning integrations.",
+    responsibilities: [
+      "Develop SAP custom objects, enhancements, reports, interfaces, conversions and forms",
+      "Develop solutions using ABAP Objects (OO), CDS Views, AMDP, RAP and OData",
+      "Build REST/SOAP APIs and enterprise integration solutions",
+      "Debug, refactor and optimise ABAP programs, memory consumption and integrations",
+      "Develop data migration and ETL solutions using IDocs, BAPIs, Migration Cockpit, LSMW, EMIGALL and BODS",
+      "Develop and deploy modern SAP Fiori/UI5 applications",
+      "Support BRIM components including SOM, CI, CC and FI-CA",
+      "Enhance billing, invoicing, payments and dunning processes",
+      "Support BRIM integration with CRM and external systems",
+      "Work with RFC, IDocs, REST/SOAP and secure authentication protocols",
+      "Support SAP CRM Web UI, GENIL/BOL and One Order architecture"
+    ],
+    tags: ["SAP ABAP", "S/4HANA", "BRIM", "FI-CA", "ABAP OO", "CDS Views", "AMDP", "RAP", "OData", "Fiori/UI5", "IDocs", "RFC", "GENIL/BOL"],
+    preferred: "SAP BTP | Business Application Studio (BAS) | Fiori Elements | DevOps | Agile",
+    badgeColor: "orange"
   }
 ];
 
