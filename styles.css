@@ -1938,3 +1938,127 @@ footer {
   .practice-areas-grid { grid-template-columns: 1fr; }
   .talent-pool-hero-card { padding: 32px 24px; }
 }
+
+
+/* Urgent Badges & Role Details */
+.urgent-card {
+  border: 1px solid rgba(247, 127, 0, 0.45) !important;
+  box-shadow: 0 10px 30px rgba(247, 127, 0, 0.12) !important;
+}
+
+.urgent-badge {
+  background: linear-gradient(90deg, #e63973, #f77f00);
+  color: #ffffff;
+  font-size: 0.76rem;
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.08em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 0 15px rgba(230, 57, 115, 0.4);
+  animation: pulseUrgent 2s infinite alternate;
+}
+
+@keyframes pulseUrgent {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.04); }
+}
+
+.c2h-badge {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-glass);
+  color: var(--teal);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 20px;
+}
+
+.job-highlight-strip {
+  display: flex;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
+  padding: 10px 16px;
+  margin: 12px 0 16px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  flex-wrap: wrap;
+}
+
+.job-highlight-strip span strong {
+  color: var(--text-primary);
+}
+
+.role-details-toggle {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--border-glass);
+  border-radius: 14px;
+  margin: 16px 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.role-toggle-btn {
+  width: 100%;
+  padding: 12px 18px;
+  background: none;
+  border: none;
+  color: var(--teal);
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.role-toggle-btn:hover {
+  background: rgba(44, 170, 176, 0.08);
+}
+
+.role-details-content {
+  display: none;
+  padding: 0 20px 18px;
+  border-top: 1px solid var(--border-glass);
+  margin-top: 6px;
+}
+
+.role-details-toggle.open .role-details-content {
+  display: block;
+}
+
+.role-bullets {
+  margin: 12px 0;
+  padding-left: 0;
+}
+
+.role-bullets li {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  padding: 5px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.6;
+}
+
+.role-bullets li::before {
+  content: '▸';
+  color: var(--orange);
+  font-weight: 800;
+}
+
+.preferred-skills-box {
+  background: rgba(247, 127, 0, 0.08);
+  border: 1px solid rgba(247, 127, 0, 0.25);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.84rem;
+  color: var(--text-primary);
+  margin-top: 10px;
+}

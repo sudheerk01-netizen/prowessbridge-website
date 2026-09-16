@@ -195,39 +195,31 @@ document.addEventListener('DOMContentLoaded', () => {
 // ============================================================
 // CAREERS: DYNAMIC JOB OPENINGS CONFIGURATION
 // ============================================================
-// To post a new job opening, simply add an object below.
-// If this list is empty (const JOB_OPENINGS = [];), the page
-// automatically displays the "Active Talent Pool & Upcoming Engagements"
-// banner inviting candidates to submit their CV and profile.
-// ============================================================
 const JOB_OPENINGS = [
-  // UNCOMMENT OR ADD NEW OPENINGS HERE AS REQUIREMENTS ARISE:
-  /*
   {
-    id: "PB-JOB-01",
-    title: "Lead SAP S/4HANA FICO Consultant",
-    department: "SAP Practice",
+    id: "PB-SAP-CM-01",
+    title: "SAP Convergent Mediation Developer",
+    urgent: true,
+    department: "SAP Practice (BRIM)",
     deptKey: "sap",
-    location: "Hyderabad / Bangalore • Hybrid",
+    employmentType: "C2H (Contract-to-Hire)",
+    location: "India Delivery Hub / Hybrid / Remote",
     locKey: "hybrid",
-    experience: "7–10 Years",
-    description: "Lead enterprise S/4HANA finance transformations, Clean Core architecture design, Universal Journal integration, and cross-functional mapping with SD and MM.",
-    tags: ["SAP S/4HANA", "FICO", "Clean Core", "BTP", "Universal Journal"],
+    experience: "9+ Years overall | 5+ Years SAP CM",
+    description: "We are looking for an experienced SAP Convergent Mediation Developer with strong expertise in high-volume usage and event processing environments. You will architect mediation pipelines, transformation logic, and seamless integration with SAP BRIM, CC, CI, FI-CA, and S/4HANA.",
+    responsibilities: [
+      "Design, develop and support enterprise SAP Convergent Mediation solutions",
+      "Develop mediation pipelines, transformation logic, enrichment and routing rules",
+      "Process and transform high-volume usage and real-time event data",
+      "Support event collection, normalisation, validation, duplicate detection, and error handling",
+      "Integrate with SAP CC, CI, FI-CA, and SAP S/4HANA via APIs and middleware",
+      "Optimise mediation pipelines for ultra-high-volume processing and performance tuning",
+      "Develop automation scripts, support deployments, root cause analysis (RCA), and maintain technical runbooks"
+    ],
+    tags: ["SAP Convergent Mediation", "SAP BRIM", "Event Processing", "Mediation Pipelines", "SAP CC", "SAP CI", "FI-CA", "APIs & Middleware", "Performance Tuning"],
+    preferred: "SAP S/4HANA | Integration Suite | SAP BTP | Kafka / Event Streaming | Cloud SAP | DevOps",
     badgeColor: "orange"
-  },
-  {
-    id: "PB-JOB-02",
-    title: "Senior Full-Stack Cloud Engineer",
-    department: "Cloud & Engineering",
-    deptKey: "cloud",
-    location: "India Hub / Remote",
-    locKey: "remote",
-    experience: "5–8 Years",
-    description: "Architect scalable web portals and event-driven microservices using React, Node.js, and Python. Build resilient REST/GraphQL APIs and containerized cloud services on AWS/Azure.",
-    tags: ["React", "Node.js", "TypeScript", "AWS / GCP", "Kubernetes"],
-    badgeColor: ""
   }
-  */
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -238,76 +230,31 @@ document.addEventListener('DOMContentLoaded', () => {
   const deptFilter = document.getElementById('departmentFilter');
   const locFilter = document.getElementById('locationFilter');
 
-  // Render Job Openings or Talent Pool State
   function renderJobsList() {
     if (!jobsContainer) return;
 
     if (!JOB_OPENINGS || JOB_OPENINGS.length === 0) {
-      // Hide filter bar if no individual jobs are posted
       if (filterBar) filterBar.style.display = 'none';
-
-      // Render Active Talent Pool Showcase
       jobsContainer.innerHTML = `
         <div class="talent-pool-hero-card">
           <div class="talent-pool-status-tag">
             <span class="pulse-dot"></span> Active Talent Acquisition & Ongoing Sourcing
           </div>
-          
           <h3 class="talent-pool-title">We Hire On An Ongoing Basis for Enterprise Engagements</h3>
           <p class="talent-pool-desc">
             Our technology delivery teams and SAP transformation pods expand dynamically based on new client requirements across North America, Europe, and India. While active project positions are being finalized, we continuously evaluate and interview experienced specialists.
           </p>
-
-          <div class="practice-areas-grid">
-            <div class="practice-pill-card">
-              <span class="practice-icon">⚡</span>
-              <div>
-                <strong>SAP S/4HANA Practice</strong>
-                <p>FICO, SD, MM, PP, EWM, ABAP on HANA, SAP BTP & AMS</p>
-              </div>
-            </div>
-            
-            <div class="practice-pill-card">
-              <span class="practice-icon">☁️</span>
-              <div>
-                <strong>Cloud & Software Engineering</strong>
-                <p>Full-Stack React/Node, Python, DevOps, Kubernetes, QA Automation</p>
-              </div>
-            </div>
-
-            <div class="practice-pill-card">
-              <span class="practice-icon">📦</span>
-              <div>
-                <strong>Supply Chain & Logistics</strong>
-                <p>S&OP Demand Planning, Procure-to-Pay (P2P), WMS, Control Tower</p>
-              </div>
-            </div>
-
-            <div class="practice-pill-card">
-              <span class="practice-icon">🎯</span>
-              <div>
-                <strong>ProCXel Recruitment Desk</strong>
-                <p>Technical Recruiters, Sourcing Specialists, Executive Search</p>
-              </div>
-            </div>
-          </div>
-
           <div class="talent-pool-cta-wrap">
             <button class="btn btn-primary apply-now-btn" data-job-id="PB-TALENT-POOL" data-job-title="General Application / Enterprise Talent Pool" style="padding:16px 36px; font-size:1.05rem;">
               Submit Your CV & Express Interest ↗
             </button>
-            <span style="font-size:0.9rem; color:var(--text-dim); display:block; margin-top:12px;">
-              ⚡ Applications are reviewed directly by our Practice Leads within 48–72 hours.
-            </span>
           </div>
         </div>
       `;
-
       attachModalListeners();
       return;
     }
 
-    // If openings exist:
     if (filterBar) filterBar.style.display = 'flex';
     filterJobs();
   }
@@ -330,14 +277,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (countDisplay) {
-      countDisplay.textContent = `Showing ${filtered.length} Opening${filtered.length === 1 ? '' : 's'}`;
+      countDisplay.textContent = `Showing ${filtered.length} Active Opening${filtered.length === 1 ? '' : 's'}`;
     }
 
     if (filtered.length === 0) {
       jobsContainer.innerHTML = `
         <div style="grid-column: 1 / -1; text-align:center; padding:50px 20px; background:var(--bg-card); border-radius:20px; border:1px solid var(--border-glass);">
           <h4 style="font-size:1.3rem; color:#ffffff; margin-bottom:8px;">No matching openings found</h4>
-          <p style="color:var(--text-secondary); margin-bottom:20px;">Try adjusting your search criteria or submit a general application.</p>
+          <p style="color:var(--text-secondary); margin-bottom:20px;">Try adjusting your search query or submit a general application.</p>
           <button class="btn btn-outline apply-now-btn" data-job-id="PB-TALENT-POOL" data-job-title="General Application / Enterprise Talent Pool">
             Submit General Application ↗
           </button>
@@ -345,29 +292,65 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     } else {
       jobsContainer.innerHTML = filtered.map(job => `
-        <div class="job-card-item">
+        <div class="job-card-item ${job.urgent ? 'urgent-card' : ''}">
           <div>
             <div class="job-meta-top">
-              <span class="job-dept-badge ${job.badgeColor || ''}">${job.department}</span>
+              <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                ${job.urgent ? `<span class="urgent-badge">🔥 URGENT REQUIREMENT</span>` : ''}
+                <span class="job-dept-badge ${job.badgeColor || ''}">${job.department}</span>
+                ${job.employmentType ? `<span class="c2h-badge">${job.employmentType}</span>` : ''}
+              </div>
               <span class="job-location-pill">📍 ${job.location}</span>
             </div>
+
             <h3 class="job-card-title">${job.title}</h3>
+            
+            <div class="job-highlight-strip">
+              <span><strong>Overall Exp:</strong> 9+ Years</span>
+              <span><strong>SAP CM Exp:</strong> 5+ Years</span>
+              <span><strong>Model:</strong> C2H Contract</span>
+            </div>
+
             <p class="job-card-desc">${job.description}</p>
-            <div class="job-tags-row">
+
+            <!-- RESPONSIBILITIES COLLAPSIBLE -->
+            ${job.responsibilities && job.responsibilities.length ? `
+              <div class="role-details-toggle" data-job-id="${job.id}">
+                <button class="role-toggle-btn" type="button">
+                  <span>View Key Responsibilities & Integration Scope</span>
+                  <span class="toggle-arrow">▾</span>
+                </button>
+                <div class="role-details-content">
+                  <ul class="role-bullets">
+                    ${job.responsibilities.map(r => `<li>${r}</li>`).join('')}
+                  </ul>
+                  ${job.preferred ? `
+                    <div class="preferred-skills-box">
+                      <strong>⭐ Preferred & Advantageous:</strong> ${job.preferred}
+                    </div>
+                  ` : ''}
+                </div>
+              </div>
+            ` : ''}
+
+            <div class="job-tags-row" style="margin-top:16px;">
               ${(job.tags || []).map(tag => `<span class="job-skill-chip">${tag}</span>`).join('')}
             </div>
           </div>
+
           <div class="job-card-footer">
             <div class="job-exp-info">Experience: <strong>${job.experience}</strong></div>
-            <button class="btn btn-primary apply-now-btn" data-job-id="${job.id}" data-job-title="${job.title}">Apply Now ↗</button>
+            <button class="btn btn-primary apply-now-btn" data-job-id="${job.id}" data-job-title="${job.title}" style="box-shadow:0 8px 24px rgba(247,127,0,0.35); border-color:var(--orange);">
+              Apply for This Position ↗
+            </button>
           </div>
         </div>
       `).join('') + `
         <div class="general-app-banner">
           <div class="general-app-text">
-            <span class="card-tag" style="color:var(--teal);">TALENT POOL INVITATION</span>
-            <h3>Looking for another domain or leadership role?</h3>
-            <p>Submit your profile to our general talent pool. When client mandates match your expertise, our practice leads reach out immediately.</p>
+            <span class="card-tag" style="color:var(--teal);">ADDITIONAL PROFILES</span>
+            <h3>Looking for other SAP modules or Cloud roles?</h3>
+            <p>We are constantly expanding our SAP S/4HANA and engineering pods. Submit your profile to our talent desk for upcoming client engagements.</p>
           </div>
           <div>
             <button class="btn btn-outline apply-now-btn" data-job-id="PB-TALENT-POOL" data-job-title="General Application / Enterprise Talent Pool" style="border-color:var(--teal); color:#ffffff;">
@@ -379,6 +362,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     attachModalListeners();
+    attachToggleListeners();
+  }
+
+  function attachToggleListeners() {
+    document.querySelectorAll('.role-toggle-btn').forEach(btn => {
+      btn.onclick = (e) => {
+        e.preventDefault();
+        const parent = btn.closest('.role-details-toggle');
+        if (parent) {
+          parent.classList.toggle('open');
+          const arrow = btn.querySelector('.toggle-arrow');
+          if (arrow) {
+            arrow.textContent = parent.classList.contains('open') ? '▴' : '▾';
+          }
+        }
+      };
+    });
   }
 
   searchInput?.addEventListener('input', filterJobs);
@@ -557,6 +557,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1200);
   });
 
-  // Initial Run
   renderJobsList();
 });
