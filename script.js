@@ -188,3 +188,230 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+
+// ============================================================
+// CAREERS & APPLICATION FORM LOGIC
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  // 1. FILTER & SEARCH LOGIC
+  const searchInput = document.getElementById('jobSearchInput');
+  const deptFilter = document.getElementById('departmentFilter');
+  const locFilter = document.getElementById('locationFilter');
+  const jobCards = document.querySelectorAll('.job-card-item');
+  const countDisplay = document.getElementById('jobCountDisplay');
+
+  function filterJobs() {
+    if (!jobCards.length) return;
+    const query = (searchInput?.value || '').toLowerCase().trim();
+    const dept = deptFilter?.value || 'all';
+    const loc = locFilter?.value || 'all';
+
+    let visibleCount = 0;
+
+    jobCards.forEach(card => {
+      const cardDept = card.getAttribute('data-dept') || '';
+      const cardLoc = card.getAttribute('data-loc') || '';
+      const textContent = card.innerText.toLowerCase();
+
+      const matchesSearch = !query || textContent.includes(query);
+      const matchesDept = dept === 'all' || cardDept === dept;
+      const matchesLoc = loc === 'all' || cardLoc === loc;
+
+      if (matchesSearch && matchesDept && matchesLoc) {
+        card.style.display = 'flex';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    if (countDisplay) {
+      countDisplay.textContent = `Showing ${visibleCount} Opening${visibleCount === 1 ? '' : 's'}`;
+    }
+  }
+
+  searchInput?.addEventListener('input', filterJobs);
+  deptFilter?.addEventListener('change', filterJobs);
+  locFilter?.addEventListener('change', filterJobs);
+
+  // 2. MODAL TOGGLE & ROLE AUTO-POPULATE
+  const modal = document.getElementById('applicationModal');
+  const modalCloseBtn = document.getElementById('modalCloseBtn');
+  const modalRoleTitle = document.getElementById('modalJobTitle');
+  const modalJobRef = document.getElementById('modalJobRef');
+  const appliedJobId = document.getElementById('appliedJobId');
+  const appliedJobTitle = document.getElementById('appliedJobTitle');
+  const careerForm = document.getElementById('careerApplicationForm');
+  const modalSuccessView = document.getElementById('modalSuccessView');
+  const closeSuccessBtn = document.getElementById('closeSuccessBtn');
+  const successRefCode = document.getElementById('successRefCode');
+
+  function openModal(jobId, jobTitle) {
+    if (!modal) return;
+    if (modalRoleTitle) modalRoleTitle.textContent = jobTitle;
+    if (modalJobRef) modalJobRef.textContent = `Reference Code: #${jobId}`;
+    if (appliedJobId) appliedJobId.value = jobId;
+    if (appliedJobTitle) appliedJobTitle.value = jobTitle;
+
+    // Reset view states
+    if (careerForm) careerForm.style.display = 'block';
+    if (modalSuccessView) modalSuccessView.classList.remove('active');
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    if (!modal) return;
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+  }
+
+  document.querySelectorAll('.apply-now-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const jobId = btn.getAttribute('data-job-id') || 'PB-JOB-GEN';
+      const jobTitle = btn.getAttribute('data-job-title') || 'General Application';
+      openModal(jobId, jobTitle);
+    });
+  });
+
+  modalCloseBtn?.addEventListener('click', closeModal);
+  closeSuccessBtn?.addEventListener('click', closeModal);
+
+  // Close on backdrop click
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal?.classList.contains('active')) {
+      closeModal();
+    }
+  });
+
+  // 3. FILE UPLOAD & VALIDATION (CV & Cover Letter)
+  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
+  const ALLOWED_EXTS = ['pdf', 'docx', 'doc'];
+
+  function setupDropzone(dropzoneId, inputId, previewChipId, nameId, sizeId, removeBtnId, errorId) {
+    const dropzone = document.getElementById(dropzoneId);
+    const input = document.getElementById(inputId);
+    const chip = document.getElementById(previewChipId);
+    const nameEl = document.getElementById(nameId);
+    const sizeEl = document.getElementById(sizeId);
+    const removeBtn = document.getElementById(removeBtnId);
+    const errorEl = document.getElementById(errorId);
+
+    if (!dropzone || !input) return;
+
+    function formatSize(bytes) {
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    }
+
+    function handleFile(file) {
+      if (!file) return;
+      const ext = file.name.split('.').pop().toLowerCase();
+
+      // Validation
+      if (!ALLOWED_EXTS.includes(ext) || file.size > MAX_FILE_SIZE) {
+        if (errorEl) {
+          errorEl.textContent = !ALLOWED_EXTS.includes(ext)
+            ? 'Only PDF, DOCX, or DOC formats are accepted.'
+            : `File size (${formatSize(file.size)}) exceeds the maximum 5 MB limit.`;
+          errorEl.classList.add('active');
+        }
+        input.value = '';
+        chip?.classList.remove('active');
+        return false;
+      }
+
+      if (errorEl) errorEl.classList.remove('active');
+      if (nameEl) nameEl.textContent = file.name;
+      if (sizeEl) sizeEl.textContent = formatSize(file.size);
+      chip?.classList.add('active');
+      return true;
+    }
+
+    dropzone.addEventListener('click', () => input.click());
+
+    input.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      handleFile(file);
+    });
+
+    dropzone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropzone.classList.add('dragover');
+    });
+
+    dropzone.addEventListener('dragleave', () => {
+      dropzone.classList.remove('dragover');
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) {
+        input.files = e.dataTransfer.files;
+        handleFile(e.dataTransfer.files[0]);
+      }
+    });
+
+    removeBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      input.value = '';
+      chip?.classList.remove('active');
+      if (errorEl) errorEl.classList.remove('active');
+    });
+  }
+
+  setupDropzone('cvDropzone', 'cvFileInput', 'cvPreviewChip', 'cvFileName', 'cvFileSize', 'cvRemoveBtn', 'cvErrorMsg');
+  setupDropzone('clDropzone', 'clFileInput', 'clPreviewChip', 'clFileName', 'clFileSize', 'clRemoveBtn', 'clErrorMsg');
+
+  // 4. SUBMISSION HANDLER
+  careerForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const cvInput = document.getElementById('cvFileInput');
+    if (!cvInput?.files?.length) {
+      const cvError = document.getElementById('cvErrorMsg');
+      if (cvError) {
+        cvError.textContent = 'Please attach your Curriculum Vitae (CV) / Resume.';
+        cvError.classList.add('active');
+      }
+      return;
+    }
+
+    const submitBtn = document.getElementById('submitAppBtn');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Transmitting Application...';
+    }
+
+    // Simulate reliable dispatch
+    setTimeout(() => {
+      const randomRef = 'PB-APP-' + Math.floor(1000 + Math.random() * 9000);
+      if (successRefCode) successRefCode.textContent = `Application Ref: #${randomRef}`;
+
+      if (careerForm) careerForm.style.display = 'none';
+      if (modalSuccessView) modalSuccessView.classList.add('active');
+
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Application ↗';
+      }
+
+      // Reset form fields
+      careerForm.reset();
+      document.getElementById('cvPreviewChip')?.classList.remove('active');
+      document.getElementById('clPreviewChip')?.classList.remove('active');
+    }, 1200);
+  });
+});
